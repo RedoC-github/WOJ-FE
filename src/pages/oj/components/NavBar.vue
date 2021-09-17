@@ -48,13 +48,13 @@
           <Button type="ghost"
                   ref="loginBtn"
                   shape="circle"
-                  @click="handleBtnClick('login')">{{$t('로그인(영문)')}}
+                  @click="handleBtnClick('login')">{{$t('로그인')}}
           </Button>
           <Button v-if="website.allow_register"
                   type="ghost"
                   shape="circle"
                   @click="handleBtnClick('register')"
-                  style="margin-left: 5px;">{{$t('등록(영문)')}}
+                  style="margin-left: 5px;">{{$t('등록')}}
           </Button>
         </div>
       </template>
