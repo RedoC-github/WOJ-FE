@@ -1,18 +1,17 @@
 <template>
   <div class="flex-container">
-    <link rel="stylesheet" href="../fonts/font.css">
-    <div id="main" style="font-family: 'Gmarket Sans', 'sans-serif';">
+    <div id="main">
       <Panel shadow>
-        <div slot="title" style="font-weight: bold">{{$t('채점 현황')}}</div>
+        <div slot="title">{{title}}</div>
         <div slot="extra">
           <ul class="filter">
             <li>
               <Dropdown @on-click="handleResultChange">
-                <span>{{$t('결과')}}
+                <span>{{status}}
                   <Icon type="arrow-down-b"></Icon>
                 </span>
                 <Dropdown-menu slot="list">
-                  <Dropdown-item name="">{{$t('전체')}}</Dropdown-item>
+                  <Dropdown-item name="">{{$t('m.All')}}</Dropdown-item>
                   <Dropdown-item v-for="status in Object.keys(JUDGE_STATUS)" :key="status" :name="status">
                     {{$t('m.' + JUDGE_STATUS[status].name.replace(/ /g, "_"))}}
                   </Dropdown-item>
@@ -23,16 +22,16 @@
 
             <li>
               <i-switch size="large" v-model="formFilter.myself" @on-change="handleQueryChange">
-                <span slot="open">{{$t('나')}}</span>
-                <span slot="close">{{$t('전체')}}</span>
+                <span slot="open">{{$t('m.Mine')}}</span>
+                <span slot="close">{{$t('m.All')}}</span>
               </i-switch>
             </li>
             <li>
-              <Input v-model="formFilter.username" :placeholder="$t('사용자 검색')" @on-enter="handleQueryChange"/>
+              <Input v-model="formFilter.username" :placeholder="$t('m.Search_Author')" @on-enter="handleQueryChange"/>
             </li>
 
             <li>
-              <Button type="info" icon="refresh" @click="getSubmissions">{{$t('새로 고침')}}</Button>
+              <Button type="info" icon="refresh" @click="getSubmissions">{{$t('m.Refresh')}}</Button>
             </li>
           </ul>
         </div>
@@ -65,14 +64,14 @@
         },
         columns: [
           {
-            title: this.$i18n.t('제출 시각'),
+            title: this.$i18n.t('m.When'),
             align: 'center',
             render: (h, params) => {
               return h('span', time.utcToLocal(params.row.create_time))
             }
           },
           {
-            title: this.$i18n.t('아이디'),
+            title: this.$i18n.t('m.ID'),
             align: 'center',
             render: (h, params) => {
               if (params.row.show_link) {
@@ -93,7 +92,7 @@
             }
           },
           {
-            title: this.$i18n.t('결과'),
+            title: this.$i18n.t('m.Status'),
             align: 'center',
             render: (h, params) => {
               return h('Tag', {
@@ -104,7 +103,7 @@
             }
           },
           {
-            title: this.$i18n.t('문제'),
+            title: this.$i18n.t('m.Problem'),
             align: 'center',
             render: (h, params) => {
               return h('span',
@@ -131,26 +130,26 @@
             }
           },
           {
-            title: this.$i18n.t('런타임 시간'),
+            title: this.$i18n.t('m.Time'),
             align: 'center',
             render: (h, params) => {
               return h('span', utils.submissionTimeFormat(params.row.statistic_info.time_cost))
             }
           },
           {
-            title: this.$i18n.t('메모리'),
+            title: this.$i18n.t('m.Memory'),
             align: 'center',
             render: (h, params) => {
               return h('span', utils.submissionMemoryFormat(params.row.statistic_info.memory_cost))
             }
           },
           {
-            title: this.$i18n.t('사용 언어'),
+            title: this.$i18n.t('m.Language'),
             align: 'center',
             key: 'language'
           },
           {
-            title: this.$i18n.t('작성자'),
+            title: this.$i18n.t('m.Author'),
             align: 'center',
             render: (h, params) => {
               return h('a', {
@@ -298,15 +297,15 @@
       ...mapGetters(['isAuthenticated', 'user']),
       title () {
         if (!this.contestID) {
-          return this.$i18n.t('결과')
+          return this.$i18n.t('m.Status')
         } else if (this.problemID) {
-          return this.$i18n.t('문제 제출')
+          return this.$i18n.t('m.Problem_Submissions')
         } else {
-          return this.$i18n.t('제출')
+          return this.$i18n.t('m.Submissions')
         }
       },
       status () {
-        return this.formFilter.result === '' ? this.$i18n.t('상태') : this.$i18n.t('m.' + JUDGE_STATUS[this.formFilter.result].name.replace(/ /g, '_'))
+        return this.formFilter.result === '' ? this.$i18n.t('m.Status') : this.$i18n.t('m.' + JUDGE_STATUS[this.formFilter.result].name.replace(/ /g, '_'))
       },
       rejudgeColumnVisible () {
         return !this.contestID && this.user.admin_type === USER_TYPE.SUPER_ADMIN

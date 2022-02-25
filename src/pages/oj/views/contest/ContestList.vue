@@ -1,14 +1,13 @@
 <template>
   <Row type="flex">
     <Col :span="24">
-    <link rel="stylesheet" href="../fonts/font.css">
     <Panel id="contest-card" shadow>
-      <div slot="title" style="font-family: 'Gmarket Sans', 'sans-serif'; font-weight: bold">{{query.rule_type === '' ? this.$i18n.t('모든') : query.rule_type}} {{$t('대회')}}</div>
+      <div slot="title">{{query.rule_type === '' ? this.$i18n.t('m.All') : query.rule_type}} {{$t('m.Contests')}}</div>
       <div slot="extra">
         <ul class="filter">
           <li>
             <Dropdown @on-click="onRuleChange">
-              <span>{{query.rule_type === '' ? this.$i18n.t('규칙') : this.$i18n.t('m.' + query.rule_type)}}
+              <span>{{query.rule_type === '' ? this.$i18n.t('m.Rule') : this.$i18n.t('m.' + query.rule_type)}}
                 <Icon type="arrow-down-b"></Icon>
               </span>
               <Dropdown-menu slot="list">
@@ -20,24 +19,24 @@
           </li>
           <li>
             <Dropdown @on-click="onStatusChange">
-              <span>{{query.status === '' ? this.$i18n.t('상태') : this.$i18n.t('m.' + CONTEST_STATUS_REVERSE[query.status].name.replace(/ /g,"_"))}}
+              <span>{{query.status === '' ? this.$i18n.t('m.Status') : this.$i18n.t('m.' + CONTEST_STATUS_REVERSE[query.status].name.replace(/ /g,"_"))}}
                 <Icon type="arrow-down-b"></Icon>
               </span>
               <Dropdown-menu slot="list">
                 <Dropdown-item name="">{{$t('m.All')}}</Dropdown-item>
-                <Dropdown-item name="0">{{$t('진행 중')}}</Dropdown-item>
-                <Dropdown-item name="1">{{$t('진행 대기 중')}}</Dropdown-item>
-                <Dropdown-item name="-1">{{$t('종료')}}</Dropdown-item>
+                <Dropdown-item name="0">{{$t('m.Underway')}}</Dropdown-item>
+                <Dropdown-item name="1">{{$t('m.Not_Started')}}</Dropdown-item>
+                <Dropdown-item name="-1">{{$t('m.Ended')}}</Dropdown-item>
               </Dropdown-menu>
             </Dropdown>
           </li>
           <li>
             <Input id="keyword" @on-enter="changeRoute" @on-click="changeRoute" v-model="query.keyword"
-                   icon="ios-search-strong" placeholder="키워드"/>
+                   icon="ios-search-strong" placeholder="Keyword"/>
           </li>
         </ul>
       </div>
-      <p id="no-contest" v-if="contests.length == 0">{{$t('대회가 없어요!')}}</p>
+      <p id="no-contest" v-if="contests.length == 0">{{$t('m.No_contest')}}</p>
       <ol id="contest-list">
         <li v-for="contest in contests" :key="contest.title">
           <Row type="flex" justify="space-between" align="middle">
@@ -74,7 +73,7 @@
         </li>
       </ol>
     </Panel>
-    <Pagination :total="total" :pageSize="limit" @on-change="getContestList" :current.sync="page"></Pagination>
+    <Pagination :total="total" :page-size.sync="limit" @on-change="changeRoute" :current.sync="page" :show-sizer="true" @on-page-size-change="changeRoute"></Pagination>
     </Col>
   </Row>
 
@@ -88,7 +87,7 @@
   import time from '@/utils/time'
   import { CONTEST_STATUS_REVERSE, CONTEST_TYPE } from '@/utils/constants'
 
-  const limit = 8
+  const limit = 10
 
   export default {
     name: 'contest-list',
@@ -129,7 +128,8 @@
         this.query.rule_type = route.rule_type || ''
         this.query.keyword = route.keyword || ''
         this.page = parseInt(route.page) || 1
-        this.getContestList()
+        this.limit = parseInt(route.limit) || 10
+        this.getContestList(this.page)
       },
       getContestList (page = 1) {
         let offset = (page - 1) * this.limit
@@ -141,6 +141,8 @@
       changeRoute () {
         let query = Object.assign({}, this.query)
         query.page = this.page
+        query.limit = this.limit
+
         this.$router.push({
           name: 'contest-list',
           query: utils.filterEmptyValue(query)

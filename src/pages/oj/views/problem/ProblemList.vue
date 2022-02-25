@@ -1,14 +1,13 @@
 <template>
   <Row type="flex" :gutter="18">
     <Col :span=19>
-    <link rel="stylesheet" href="../fonts/font.css">
     <Panel shadow>
-      <div slot="title" style="font-family: 'Gmarket Sans', 'sans-serif'; font-weight: bold">{{$t('문제 리스트')}}</div>
+      <div slot="title">{{$t('m.Problem_List')}}</div>
       <div slot="extra">
         <ul class="filter">
           <li>
             <Dropdown @on-click="filterByDifficulty">
-              <span>{{query.difficulty === '' ? this.$i18n.t('난이도') : this.$i18n.t('m.' + query.difficulty)}}
+              <span>{{query.difficulty === '' ? this.$i18n.t('m.Difficulty') : this.$i18n.t('m.' + query.difficulty)}}
                 <Icon type="arrow-down-b"></Icon>
               </span>
               <Dropdown-menu slot="list">
@@ -21,8 +20,8 @@
           </li>
           <li>
             <i-switch size="large" @on-change="handleTagsVisible">
-              <span slot="open">{{$t('태그')}}</span>
-              <span slot="close">{{$t('태그')}}</span>
+              <span slot="open">{{$t('m.Tags')}}</span>
+              <span slot="close">{{$t('m.Tags')}}</span>
             </i-switch>
           </li>
           <li>
@@ -35,7 +34,7 @@
           <li>
             <Button type="info" @click="onReset">
               <Icon type="refresh"></Icon>
-              {{$t('새로 고침')}}
+              {{$t('m.Reset')}}
             </Button>
           </li>
         </ul>
@@ -46,13 +45,14 @@
              :loading="loadings.table"
              disabled-hover></Table>
     </Panel>
-    <Pagination :total="total" :page-size="limit" @on-change="pushRouter" :current.sync="query.page"></Pagination>
+    <Pagination
+      :total="total" :page-size.sync="query.limit" @on-change="pushRouter" @on-page-size-change="pushRouter" :current.sync="query.page" :show-sizer="true"></Pagination>
 
     </Col>
 
     <Col :span="5">
     <Panel :padding="10">
-      <div slot="title" class="taglist-title">{{$t('태그')}}</div>
+      <div slot="title" class="taglist-title">{{$t('m.Tags')}}</div>
       <Button v-for="tag in tagList"
               :key="tag.name"
               @click="filterByTag(tag.name)"
@@ -64,7 +64,7 @@
 
       <Button long id="pick-one" @click="pickone">
         <Icon type="shuffle"></Icon>
-        {{$t('셔플로 고르기')}}
+        {{$t('m.Pick_One')}}
       </Button>
     </Panel>
     <Spin v-if="loadings.tag" fix size="large"></Spin>
@@ -111,7 +111,7 @@
             }
           },
           {
-            title: this.$i18n.t('제목'),
+            title: this.$i18n.t('m.Title'),
             width: 400,
             render: (h, params) => {
               return h('Button', {
@@ -134,7 +134,7 @@
             }
           },
           {
-            title: this.$i18n.t('레벨'),
+            title: this.$i18n.t('m.Level'),
             render: (h, params) => {
               let t = params.row.difficulty
               let color = 'blue'
@@ -148,11 +148,11 @@
             }
           },
           {
-            title: this.$i18n.t('제출 수'),
+            title: this.$i18n.t('m.Total'),
             key: 'submission_number'
           },
           {
-            title: this.$i18n.t('레이팅'),
+            title: this.$i18n.t('m.AC_Rate'),
             render: (h, params) => {
               return h('span', this.getACRate(params.row.accepted_number, params.row.submission_number))
             }
@@ -170,7 +170,8 @@
           keyword: '',
           difficulty: '',
           tag: '',
-          page: 1
+          page: 1,
+          limit: 10
         }
       }
     },
@@ -188,6 +189,7 @@
         if (this.query.page < 1) {
           this.query.page = 1
         }
+        this.query.limit = parseInt(query.limit) || 10
         if (!simulate) {
           this.getTagList()
         }
@@ -200,7 +202,7 @@
         })
       },
       getProblemList () {
-        let offset = (this.query.page - 1) * this.limit
+        let offset = (this.query.page - 1) * this.query.limit
         this.loadings.table = true
         api.getProblemList(offset, this.limit, this.query).then(res => {
           this.loadings.table = false

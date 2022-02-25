@@ -1,15 +1,14 @@
 <template>
   <div>
     <NavBar></NavBar>
-    <link href='./fonts/font.css' rel='stylesheet' type='text/css'>
-    <div class="content-app" style="font-family: 'Noto Sans KR', 'sans-serif';">
+    <div class="content-app">
       <transition name="fadeInUp" mode="out-in">
         <router-view></router-view>
       </transition>
       <div class="footer">
-        <p style="font-size: 2em; font-weight: bold">Wops Online Judge Beta</p>
-        <p style="font-size: 1.25em">Powered by <a href="https://github.com/Wopslang">Wops Team</a>
-          <span v-if="version">&nbsp; <orange style="color: orange; font-weight: bold">Version: Beta β</orange></span>
+        <p v-html="website.website_footer"></p>
+        <p>Powered by <a href="https://github.com/QingdaoU/OnlineJudge">OnlineJudge</a>
+          <span v-if="version">&nbsp; Version: {{ version }}</span>
         </p>
       </div>
     </div>

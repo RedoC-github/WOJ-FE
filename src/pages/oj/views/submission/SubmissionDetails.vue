@@ -1,9 +1,8 @@
 <template>
   <Row type="flex" justify="space-around">
-    <link rel="stylesheet" href="../fonts/font.css">
     <Col :span="20" id="status">
       <Alert :type="status.type" showIcon>
-        <span class="title" style="font-family: 'Gmarket Sans', 'sans-serif'; font-weight: bold">{{$t('채점 현황')}}</span>
+        <span class="title">{{$t('m.' + status.statusName.replace(/ /g, "_"))}}</span>
         <div slot="desc" class="content">
           <template v-if="isCE">
             <pre>{{submission.statistic_info.err_info}}</pre>

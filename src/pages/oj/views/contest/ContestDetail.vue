@@ -1,6 +1,5 @@
 <template>
   <div class="flex-container">
-    <link rel="stylesheet" href="../fonts/font.css">
     <div id="contest-main">
       <!--children-->
       <transition name="fadeInUp">
@@ -11,12 +10,12 @@
         <template>
           <div id="contest-desc">
             <Panel :padding="20" shadow>
-              <div slot="title" style="font-family: 'Gmarket Sans', 'sans-serif'; font-weight: bold;">
+              <div slot="title">
                 {{contest.title}}
               </div>
               <div slot="extra">
                 <Tag type="dot" :color="countdownColor">
-                  <span id="countdown" style="font-family: 'Gmarket Sans', 'sans-serif';">{{countdown}}</span>
+                  <span id="countdown">{{countdown}}</span>
                 </Tag>
               </div>
               <div v-html="contest.description" class="markdown-body"></div>
@@ -24,7 +23,7 @@
                 <Input v-model="contestPassword" type="password"
                        placeholder="contest password" class="contest-password-input"
                        @on-enter="checkPassword"/>
-                <Button type="info" @click="checkPassword">참가하기</Button>
+                <Button type="info" @click="checkPassword">Enter</Button>
               </div>
             </Panel>
             <Table :columns="columns" :data="contest_table" disabled-hover style="margin-bottom: 40px;"></Table>
@@ -110,7 +109,7 @@
           {
             title: this.$i18n.t('m.ContestType'),
             render: (h, params) => {
-              return h('span', this.$i18n.t('m.' + params.row.contest_type.replace(' ', '_')))
+              return h('span', this.$i18n.t('m.' + params.row.contest_type ? params.row.contest_type.replace(' ', '_') : ''))
             }
           },
           {

@@ -1,6 +1,6 @@
 <template>
   <panel>
-    <div slot="title">{{$t('Frequently Asked Questions(자주 묻는 질문, 영문)')}}</div>
+    <div slot="title">{{$t('m.Frequently_Asked_Questions')}}</div>
     <div class="content markdown-body">
       <ul>
         <li>{{$t('m.Where_is_the_input_and_the_output')}} 

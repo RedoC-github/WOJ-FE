@@ -1,24 +1,34 @@
 <template>
   <div>
-    <link rel="stylesheet" href="../fonts/font.css">
-    <panel :padding="15" class="container"  style="font-family: 'Gmarket Sans', 'sans-serif'">
-      <div slot="title">{{$t('결과')}}</div>
+    <panel class="container">
+      <div slot="title">{{$t('m.Compiler')}} & {{$t('m.Judger')}}</div>
+      <div class="content markdown-body">
+        <ul>
+          <li v-for="lang in languages">{{lang.name}} ( {{lang.description}} )
+            <pre>{{lang.config.compile.compile_command}}</pre>
+          </li>
+        </ul>
+      </div>
+    </panel>
+
+    <panel :padding="15" class="container">
+      <div slot="title">{{$t('m.Result_Explanation')}}</div>
       <div class="content">
         <ul>
-          <li><b>{{$t('m.Pending')}} & {{$t('m.Judging')}}</b> : {{$t('대기중')}}</li>
-          <li><b>{{$t('m.Compile_Error')}}</b> :	{{$t('컴파일 에러')}}
+          <li><b>{{$t('m.Pending')}} & {{$t('m.Judging')}}</b> : {{$t('m.Pending_Judging_Description')}}</li>
+          <li><b>{{$t('m.Compile_Error')}}</b> :	{{$t('m.Compile_Error_Description')}}
       </li>
-          <li><b>{{$t('m.Accepted')}}</b> :	{{$t('맞았습니다!')}}</li>
-          <li><b>{{$t('m.Wrong_Answer')}}</b> :	{{$t('틀렸습니다.')}}</li>
+          <li><b>{{$t('m.Accepted')}}</b> :	{{$t('m.Accepted_Description')}}</li>
+          <li><b>{{$t('m.Wrong_Answer')}}</b> :	{{$t('m.Wrong_Answer_Description')}}</li>
           <li>
             <b>{{$t('m.Runtime_Error')}}</b>
-            :	{{$t('0으로 나누는 등 런타임 에러')}}
+            :	{{$t('m.Runtime_Error_Description')}}
           </li>
           <li><b>{{$t('m.Time_Limit_Exceeded')}}</b>
-            :	{{$t('시간 제한 초과')}}
+            :	{{$t('m.Time_Limit_Exceeded_Description')}}
           </li>
-          <li><b>{{$t('m.Memory_Limit_Exceeded')}}</b> :	{{$t('메모리 초과(메모리 누수를 점검하세요)')}}</li>
-          <li><b>{{$t('m.System_Error')}}</b> :	{{$t('시스템 오류(이 경우에는 담당자에게 연락하세요)')}}
+          <li><b>{{$t('m.Memory_Limit_Exceeded')}}</b> :	{{$t('m.Memory_Limit_Exceeded_Description')}}</li>
+          <li><b>{{$t('m.System_Error')}}</b> :	{{$t('m.System_Error_Description')}}
           </li>
         </ul>
       </div>

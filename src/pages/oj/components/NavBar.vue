@@ -1,43 +1,42 @@
 <template>
   <div id="header">
     <Menu theme="light" mode="horizontal" @on-select="handleRoute" :active-name="activeMenu" class="oj-menu">
-      <link rel="stylesheet" href="../views/fonts/font.css">
-      <div class="logo" style="font-family: 'Gmarket Sans', 'sans-serif'; font-weight: bold; color: whitesmoke"><span>Wops 온라인 저지</span></div>
-      <Menu-item style="font-family: 'Gmarket Sans', 'sans-serif'; font-weight: light; color: whitesmoke; color: whitesmoke" name="/">
+      <div class="logo"><span>{{website.website_name}}</span></div>
+      <Menu-item name="/">
         <Icon type="home"></Icon>
-        {{$t('메인 페이지')}}
+        {{$t('m.Home')}}
       </Menu-item>
-      <Menu-item style="font-family: 'Gmarket Sans', 'sans-serif'; font-weight: light; color: whitesmoke; color: whitesmoke" name="/problem">
+      <Menu-item name="/problem">
         <Icon type="ios-keypad"></Icon>
-        {{$t('문제 페이지')}}
+        {{$t('m.NavProblems')}}
       </Menu-item>
-      <Menu-item style="font-family: 'Gmarket Sans', 'sans-serif'; font-weight: light; color: whitesmoke; color: whitesmoke" name="/contest">
+      <Menu-item name="/contest">
         <Icon type="trophy"></Icon>
-        {{$t('컨테스트')}}
+        {{$t('m.Contests')}}
       </Menu-item>
-      <Menu-item style="font-family: 'Gmarket Sans', 'sans-serif'; font-weight: light; color: whitesmoke; color: whitesmoke" name="/status">
+      <Menu-item name="/status">
         <Icon type="ios-pulse-strong"></Icon>
-        {{$t('채점 현황')}}
+        {{$t('m.NavStatus')}}
       </Menu-item>
-      <Submenu style="font-family: 'Gmarket Sans', 'sans-serif'; font-weight: light; color: whitesmoke; color: whitesmoke" name="rank">
+      <Submenu name="rank">
         <template slot="title">
           <Icon type="podium"></Icon>
-          {{$t('랭킹')}}
+          {{$t('m.Rank')}}
         </template>
         <Menu-item name="/acm-rank">
-          {{$t('ACM 랭크')}}
+          {{$t('m.ACM_Rank')}}
         </Menu-item>
         <Menu-item name="/oi-rank">
-          {{$t('OI 랭크')}}
+          {{$t('m.OI_Rank')}}
         </Menu-item>
       </Submenu>
-      <Submenu style="font-family: 'Gmarket Sans', 'sans-serif'; font-weight: light; color: whitesmoke; color: whitesmoke" name="about">
+      <Submenu name="about">
         <template slot="title">
           <Icon type="information-circled"></Icon>
           {{$t('m.About')}}
         </template>
         <Menu-item name="/about">
-          {{$t('저지 시스템')}}
+          {{$t('m.Judger')}}
         </Menu-item>
         <Menu-item name="/FAQ">
           {{$t('m.FAQ')}}
@@ -48,13 +47,13 @@
           <Button type="ghost"
                   ref="loginBtn"
                   shape="circle"
-                  @click="handleBtnClick('login')">{{$t('로그인')}}
+                  @click="handleBtnClick('login')">{{$t('m.Login')}}
           </Button>
           <Button v-if="website.allow_register"
                   type="ghost"
                   shape="circle"
                   @click="handleBtnClick('register')"
-                  style="margin-left: 5px;">{{$t('등록')}}
+                  style="margin-left: 5px;">{{$t('m.Register')}}
           </Button>
         </div>
       </template>
@@ -64,11 +63,11 @@
             <Icon type="arrow-down-b"></Icon>
           </Button>
           <Dropdown-menu slot="list">
-            <Dropdown-item name="/user-home">{{$t('내 페이지')}}</Dropdown-item>
-            <Dropdown-item name="/status?myself=1">{{$t('내 제출')}}</Dropdown-item>
-            <Dropdown-item name="/setting/profile">{{$t('설정')}}</Dropdown-item>
-            <Dropdown-item v-if="isAdminRole" name="/admin">{{$t('관리')}}</Dropdown-item>
-            <Dropdown-item divided name="/logout">{{$t('로그아웃')}}</Dropdown-item>
+            <Dropdown-item name="/user-home">{{$t('m.MyHome')}}</Dropdown-item>
+            <Dropdown-item name="/status?myself=1">{{$t('m.MySubmissions')}}</Dropdown-item>
+            <Dropdown-item name="/setting/profile">{{$t('m.Settings')}}</Dropdown-item>
+            <Dropdown-item v-if="isAdminRole" name="/admin">{{$t('m.Management')}}</Dropdown-item>
+            <Dropdown-item divided name="/logout">{{$t('m.Logout')}}</Dropdown-item>
           </Dropdown-menu>
         </Dropdown>
       </template>
@@ -112,6 +111,7 @@
     },
     computed: {
       ...mapGetters(['website', 'modalStatus', 'user', 'isAuthenticated', 'isAdminRole']),
+      // 跟随路由变化
       activeMenu () {
         return '/' + this.$route.path.split('/')[1]
       },
@@ -136,10 +136,10 @@
     height: auto;
     width: 100%;
     z-index: 1000;
-    background-color: #111111;
+    background-color: #fff;
     box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.1);
     .oj-menu {
-      background: #111111;
+      background: #fdfdfd;
     }
 
     .logo {

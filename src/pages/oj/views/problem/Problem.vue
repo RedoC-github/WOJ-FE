@@ -1,10 +1,9 @@
 <template>
   <div class="flex-container">
     <div id="problem-main">
-      <link rel="stylesheet" href="../fonts/font.css">
       <!--problem main-->
       <Panel :padding="40" shadow>
-        <div slot="title" style="font-family: 'Gmarket Sans', 'sans-serif';">{{problem.title}}</div>
+        <div slot="title">{{problem.title}}</div>
         <div id="problem-content" class="markdown-body" v-katex>
           <p class="title">{{$t('m.Description')}}</p>
           <p class="content" v-html=problem.description></p>
@@ -292,7 +291,9 @@
           })
           problem.languages = problem.languages.sort()
           this.problem = problem
-          this.changePie(problem)
+          if (problem.statistic_info) {
+            this.changePie(problem)
+          }
 
           // 在beforeRouteEnter中修改了, 说明本地有code，无需加载template
           if (this.code !== '') {

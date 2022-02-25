@@ -1,17 +1,16 @@
 <template>
   <Panel shadow :padding="10">
-    <link rel="stylesheet" href="../fonts/font.css">
-    <div slot="title" style="margin-top: 10px; font-family: 'Gmarket Sans', 'sans-serif'; font-weight: bold; font-size: 2em">
-      공지
+    <div slot="title">
+      {{title}}
     </div>
     <div slot="extra">
-      <Button v-if="listVisible" type="info" @click="init" :loading="btnLoading">{{$t('새로고침')}}</Button>
-      <Button v-else type="ghost" icon="ios-undo" @click="goBack">{{$t('뒤로 가기')}}</Button>
+      <Button v-if="listVisible" type="info" @click="init" :loading="btnLoading">{{$t('m.Refresh')}}</Button>
+      <Button v-else type="ghost" icon="ios-undo" @click="goBack">{{$t('m.Back')}}</Button>
     </div>
 
-    <transition-group name="announcement-animate" mode="in-out"  style="font-family: 'Gmarket Sans', 'sans-serif'; font-weight: bold;">
+    <transition-group name="announcement-animate" mode="in-out">
       <div class="no-announcement" v-if="!announcements.length" key="no-announcement">
-        <p style="font-family: 'Noto Sans KR', 'sans-serif'; font-weight: bold">{{$t('공지가 없는 것 같아요.')}}</p>
+        <p>{{$t('m.No_Announcements')}}</p>
       </div>
       <template v-if="listVisible">
         <ul class="announcements-container" key="list">
