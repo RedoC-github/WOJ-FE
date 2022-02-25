@@ -2,7 +2,7 @@
   <Row type="flex" :gutter="18">
     <Col :span=19>
     <Panel shadow>
-      <div slot="title">{{$t('m.Problem_List')}}</div>
+      <div slot="title">문제 리스트</div>
       <div slot="extra">
         <ul class="filter">
           <li>
@@ -111,7 +111,7 @@
             }
           },
           {
-            title: this.$i18n.t('m.Title'),
+            title: '문제',
             width: 400,
             render: (h, params) => {
               return h('Button', {

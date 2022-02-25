@@ -42,7 +42,7 @@
             }
           },
           {
-            title: this.$i18n.t('m.User_User'),
+            title: 'ID',
             align: 'center',
             render: (h, params) => {
               return h('a', {

@@ -1,11 +1,7 @@
 <template>
   <div id="header">
     <Menu theme="light" mode="horizontal" @on-select="handleRoute" :active-name="activeMenu" class="oj-menu">
-      <div class="logo"><span>{{website.website_name}}</span></div>
-      <Menu-item name="/">
-        <Icon type="home"></Icon>
-        {{$t('m.Home')}}
-      </Menu-item>
+      <a href="/" style="text-decoration: none; color: black"><div class="logo"><span>옵스 온라인 저지</span></div></a>
       <Menu-item name="/problem">
         <Icon type="ios-keypad"></Icon>
         {{$t('m.NavProblems')}}

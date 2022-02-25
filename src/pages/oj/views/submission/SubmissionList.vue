@@ -103,7 +103,7 @@
             }
           },
           {
-            title: this.$i18n.t('m.Problem'),
+            title: '문제',
             align: 'center',
             render: (h, params) => {
               return h('span',
