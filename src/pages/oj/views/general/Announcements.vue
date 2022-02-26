@@ -130,6 +130,7 @@
           flex: 1 1;
           text-align: left;
           padding-left: 10px;
+          font-weight: 600;
           a.entry {
             color: #495060;
             &:hover {

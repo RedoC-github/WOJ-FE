@@ -1,7 +1,7 @@
 <template>
   <div id="header">
     <Menu theme="light" mode="horizontal" @on-select="handleRoute" :active-name="activeMenu" class="oj-menu">
-      <a href="/" style="text-decoration: none; color: black"><div class="logo"><span>옵스 온라인 저지</span></div></a>
+      <a href="/" style="color: black;"><div><span class="logo">옵스 온라인 저지</span></div></a>
       <Menu-item name="/problem">
         <Icon type="ios-keypad"></Icon>
         {{$t('m.NavProblems')}}
@@ -133,9 +133,8 @@
     width: 100%;
     z-index: 1000;
     background-color: #fff;
-    box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.1);
     .oj-menu {
-      background: #fdfdfd;
+      background: white;
     }
 
     .logo {
@@ -144,6 +143,7 @@
       font-size: 20px;
       float: left;
       line-height: 60px;
+      font-weight: 900;
     }
 
     .drop-menu {
@@ -165,7 +165,7 @@
   .modal {
     &-title {
       font-size: 18px;
-      font-weight: 600;
+      font-weight: 500;
     }
   }
 </style>
